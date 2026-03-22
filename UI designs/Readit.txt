@@ -1,0 +1,6 @@
+home page-user
+1. change the logo and the name (It's also true for all the pages)
+2. we should change the billing option to feedback
+
+Admin page 1
+1. we could get rid of the graphs if they create problem
