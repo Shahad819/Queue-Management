@@ -1,7 +1,5 @@
-// Use your database
 use("smart_queue_system")
 
-// Function to display data with limit + skip
 function viewCollection(collectionName, page = 1, limit = 10) {
   const skip = (page - 1) * limit
 
