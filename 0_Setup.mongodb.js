@@ -1,4 +1,3 @@
-// Switch / Create DB
 use("smart_queue_system")
 
 // USERS
