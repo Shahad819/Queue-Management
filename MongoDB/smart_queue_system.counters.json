@@ -1,0 +1,28 @@
+[{
+  "_id": "userId",
+  "seq": 3
+},
+{
+  "_id": "serviceId",
+  "seq": 3
+},
+{
+  "_id": "queueId",
+  "seq": 3
+},
+{
+  "_id": "tokenId",
+  "seq": 3
+},
+{
+  "_id": "feedbackId",
+  "seq": 3
+},
+{
+  "_id": "notificationId",
+  "seq": 0
+},
+{
+  "_id": "statId",
+  "seq": 0
+}]

@@ -1,0 +1,48 @@
+[{
+  "_id": "TOKEN00001",
+  "user_id": "USER00001",
+  "queue_id": "QUEUE00001",
+  "service_id": "SERVICE00001",
+  "token_number": 6,
+  "status": "waiting",
+  "estimated_time": 15,
+  "created_at": {
+    "$date": "2026-03-29T16:44:11.709Z"
+  },
+  "called_time": null,
+  "completed_time": null
+},
+{
+  "_id": "TOKEN00002",
+  "user_id": "USER00002",
+  "queue_id": "QUEUE00002",
+  "service_id": "SERVICE00002",
+  "token_number": 11,
+  "status": "serving",
+  "estimated_time": 5,
+  "created_at": {
+    "$date": "2026-03-29T16:44:11.709Z"
+  },
+  "called_time": {
+    "$date": "2026-03-29T16:44:11.709Z"
+  },
+  "completed_time": null
+},
+{
+  "_id": "TOKEN00003",
+  "user_id": "USER00003",
+  "queue_id": "QUEUE00003",
+  "service_id": "SERVICE00003",
+  "token_number": 3,
+  "status": "done",
+  "estimated_time": 0,
+  "created_at": {
+    "$date": "2026-03-29T16:44:11.709Z"
+  },
+  "called_time": {
+    "$date": "2026-03-29T16:44:11.709Z"
+  },
+  "completed_time": {
+    "$date": "2026-03-29T16:44:11.709Z"
+  }
+}]
