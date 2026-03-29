@@ -1,12 +1,9 @@
-// Use database
 use("smart_queue_system")
 
 //Database Reset
 db.dropDatabase();
 
-// =========================
 // Create Counters Database
-// =========================
 db.createCollection("counters")
 //Insert Counters
 db.counters.insertMany([
@@ -59,9 +56,9 @@ db.users.insertMany([
   }
 ])
 
-// =========================
+
 // INSERT SERVICES
-// =========================
+
 const service1 = "SERVICE" + String(getNextSequence("serviceId")).padStart(5, "0")
 const service2 = "SERVICE" + String(getNextSequence("serviceId")).padStart(5, "0")
 const service3 = "SERVICE" + String(getNextSequence("serviceId")).padStart(5, "0")
@@ -72,9 +69,8 @@ db.services.insertMany([
   { _id: service3, service_name: "Admission", description: "University Admission" }
 ])
 
-// =========================
 // INSERT QUEUES
-// =========================
+
 const queue1 = "QUEUE" + String(getNextSequence("queueId")).padStart(5, "0")
 const queue2 = "QUEUE" + String(getNextSequence("queueId")).padStart(5, "0")
 const queue3 = "QUEUE" + String(getNextSequence("queueId")).padStart(5, "0")
@@ -85,9 +81,8 @@ db.queues.insertMany([
   { _id: queue3, service_id: service3, current_token: 2, created_at: new Date() }
 ])
 
-// =========================
 // INSERT TOKENS
-// =========================
+
 const token1 = "TOKEN" + String(getNextSequence("tokenId")).padStart(5, "0")
 const token2 = "TOKEN" + String(getNextSequence("tokenId")).padStart(5, "0")
 const token3 = "TOKEN" + String(getNextSequence("tokenId")).padStart(5, "0")
@@ -130,9 +125,8 @@ db.tokens.insertMany([
   }
 ])
 
-// =========================
 // INSERT FEEDBACKS
-// =========================
+
 const fb1 = "FEEDBACK" + String(getNextSequence("feedbackId")).padStart(5, "0")
 const fb2 = "FEEDBACK" + String(getNextSequence("feedbackId")).padStart(5, "0")
 const fb3 = "FEEDBACK" + String(getNextSequence("feedbackId")).padStart(5, "0")
@@ -163,9 +157,9 @@ db.feedbacks.insertMany([
   }
 ])
 
-// =========================
+
 // INSERT NOTIFICATIONS
-// =========================
+
 db.notifications.insertMany([
   {
     user_id: user1,
@@ -190,9 +184,7 @@ db.notifications.insertMany([
   }
 ])
 
-// =========================
-// INSERT STATISTICS
-// =========================
+// INSERT STATISTICs
 db.statistics.insertMany([
   {
     user_id: user1,
