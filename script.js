@@ -1,12 +1,12 @@
 
-// ===== STORAGE =====
+// STORAGE
 let queue = JSON.parse(localStorage.getItem("queue")) || [];
 let history = JSON.parse(localStorage.getItem("history")) || [];
 
 let alertShown = false;
 let servedAlertShown = false;
 
-// ===== GENERATE TOKEN =====
+//GENERATE TOKEN
 function generateToken(service) {
   const token = Math.floor(100 + Math.random() * 900);
 
@@ -28,7 +28,7 @@ function generateToken(service) {
   }, 300);
 }
 
-// ===== SHOW STATUS =====
+//SHOW STATUS
 function showStatus() {
   const user = JSON.parse(localStorage.getItem("currentUser"));
   const queueData = JSON.parse(localStorage.getItem("queue")) || [];
@@ -50,7 +50,7 @@ function showStatus() {
     typeof position === "number" ? position * 3 + " min" : "Done";
 }
 
-// ===== CANCEL =====
+// CANCEL
 function cancelQueue() {
   let user = JSON.parse(localStorage.getItem("currentUser"));
 
@@ -63,7 +63,7 @@ function cancelQueue() {
   window.location.href = "index.html";
 }
 
-// ===== ADMIN: SERVE NEXT =====
+//ADMIN
 function serveNext() {
   if (queue.length === 0) return;
 
@@ -76,7 +76,7 @@ function serveNext() {
   alert("Now Serving: " + served.token);
 }
 
-// ===== LIVE WATCHER (SMART SYSTEM) =====
+
 function startQueueWatcher() {
   setInterval(() => {
     const user = JSON.parse(localStorage.getItem("currentUser"));
@@ -90,13 +90,12 @@ function startQueueWatcher() {
       alertShown = false;
     }
 
-    // 🔔 NEXT ALERT
     if (position === 1 && !alertShown) {
       alert("🔔 Your turn is next!");
       alertShown = true;
     }
 
-    // 🎯 SERVED ALERT
+
     if (position === 0 && !servedAlertShown) {
       alert("🎉 You are being served now!");
       servedAlertShown = true;
@@ -106,7 +105,7 @@ function startQueueWatcher() {
   }, 3000);
 }
 
-// ===== SHOW QUEUE LIST (ADMIN STYLE) =====
+
 function showQueue() {
   const container = document.getElementById("queueList");
   if (!container) return;

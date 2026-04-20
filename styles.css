@@ -3,7 +3,7 @@ body {
   margin: 0;
   color: #1f2937;
 
-  /* Animated background */
+  
   background: linear-gradient(-45deg, #3b82f6, #8b5cf6, #06b6d4, #22c55e);
   background-size: 400% 400%;
   animation: gradientBG 10s ease infinite;
@@ -15,7 +15,7 @@ body {
   100% { background-position: 0% 50%; }
 }
 
-/* HEADER */
+
 header {
   background: linear-gradient(90deg, #2563eb, #1e40af);
   color: white;
@@ -25,7 +25,7 @@ header {
   font-weight: 600;
 }
 
-/* NAVIGATION */
+
 nav {
   display: flex;
   justify-content: center;
@@ -44,17 +44,16 @@ nav a:hover {
   color: #93c5fd;
 }
 
-/* 🔥 VERY IMPORTANT FIX */
 .container {
-  display: flex;              /* THIS FIXES ALIGNMENT */
+  display: flex;             
   justify-content: center;
   align-items: center;
-  flex-wrap: wrap;            /* allows multiple cards */
+  flex-wrap: wrap;            
   gap: 20px;
   padding: 30px;
 }
 
-/* 🔥 CARD FIX */
+
 .card {
   display: flex;
   flex-direction: column;
@@ -76,7 +75,7 @@ nav a:hover {
   box-shadow: 0 15px 25px rgba(0,0,0,0.12);
 }
 
-/* 🔥 FORCE CENTER IMAGE */
+
 .card img {
   width: 60px;
   height: 60px;
@@ -86,13 +85,13 @@ nav a:hover {
   margin: 0 auto 10px auto;   /* STRONG CENTER FIX */
 }
 
-/* TEXT */
+
 .card h3 {
   margin: 0;
   text-align: center;
 }
 
-/* BUTTONS */
+
 button {
   padding: 12px 18px;
   background: #2563eb;
@@ -108,7 +107,7 @@ button:hover {
   transform: scale(1.05);
 }
 
-/* QUEUE BOX */
+
 .queue-box {
   background: white;
   padding: 25px;
@@ -118,12 +117,12 @@ button:hover {
   box-shadow: 0 10px 25px rgba(0,0,0,0.08);
 }
 
-/* TEXT */
+
 h2, h3 {
   font-weight: 600;
 }
 
-/* RESPONSIVE */
+
 @media (max-width: 600px) {
   .container {
     flex-direction: column;
