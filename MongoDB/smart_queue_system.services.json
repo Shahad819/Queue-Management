@@ -1,15 +1,5 @@
 [{
   "_id": "SERVICE00001",
-  "service_name": "Doctor",
-  "description": "Doctor Appointment"
-},
-{
-  "_id": "SERVICE00002",
-  "service_name": "Bank",
-  "description": "Bank Service"
-},
-{
-  "_id": "SERVICE00003",
-  "service_name": "Admission",
-  "description": "University Admission"
+  "service_name": "University",
+  "description": "University Transaction"
 }]

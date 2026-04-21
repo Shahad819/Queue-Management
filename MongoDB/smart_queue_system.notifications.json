@@ -1,36 +1,30 @@
 [{
-  "_id": {
-    "$oid": "69c956db9ded367c6ab95b76"
-  },
+  "_id": "NOTIFICATION00001",
   "user_id": "USER00001",
   "token_id": "TOKEN00001",
+  "message": "now serving your token",
+  "status": "read",
+  "created_at": {
+    "$date": "2026-04-20T15:22:15.878Z"
+  }
+},
+{
+  "_id": "NOTIFICATION00002",
+  "user_id": "USER00002",
+  "token_id": "TOKEN00002",
   "message": "Your turn is near",
   "status": "sent",
   "created_at": {
-    "$date": "2026-03-29T16:44:11.733Z"
+    "$date": "2026-04-20T15:22:15.878Z"
   }
 },
 {
-  "_id": {
-    "$oid": "69c956db9ded367c6ab95b77"
-  },
-  "user_id": "USER00002",
-  "token_id": "TOKEN00002",
-  "message": "Now serving your token",
-  "status": "sent",
-  "created_at": {
-    "$date": "2026-03-29T16:44:11.733Z"
-  }
-},
-{
-  "_id": {
-    "$oid": "69c956db9ded367c6ab95b78"
-  },
+  "_id": "NOTIFICATION00003",
   "user_id": "USER00001",
   "token_id": "TOKEN00003",
-  "message": "Service completed",
+  "message": "Your turn is near",
   "status": "read",
   "created_at": {
-    "$date": "2026-03-29T16:44:11.733Z"
+    "$date": "2026-04-20T15:22:15.878Z"
   }
 }]
