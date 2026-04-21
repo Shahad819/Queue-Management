@@ -1,0 +1,36 @@
+[{
+  "_id": {
+    "$oid": "69c956db9ded367c6ab95b76"
+  },
+  "user_id": "USER00001",
+  "token_id": "TOKEN00001",
+  "message": "Your turn is near",
+  "status": "sent",
+  "created_at": {
+    "$date": "2026-03-29T16:44:11.733Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "69c956db9ded367c6ab95b77"
+  },
+  "user_id": "USER00002",
+  "token_id": "TOKEN00002",
+  "message": "Now serving your token",
+  "status": "sent",
+  "created_at": {
+    "$date": "2026-03-29T16:44:11.733Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "69c956db9ded367c6ab95b78"
+  },
+  "user_id": "USER00001",
+  "token_id": "TOKEN00003",
+  "message": "Service completed",
+  "status": "read",
+  "created_at": {
+    "$date": "2026-03-29T16:44:11.733Z"
+  }
+}]
