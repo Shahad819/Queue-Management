@@ -1,9 +1,10 @@
 const express = require('express');
-const {joinQueue, cancleToken, cancelToken} = require('../controllers/queueController');
+const {joinQueue, cancleToken, cancelToken, trackMyToken} = require('../controllers/queueController');
 const {protect} = require('../middlewares/authMiddleware');
 
 const router = express.Router();
 
+router.get('/track', protect, trackMyToken);
 router.post('/join', protect, joinQueue);
 router.delete('/cancel/:id', protect, cancelToken);
 

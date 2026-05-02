@@ -64,4 +64,34 @@ const cancelToken = async (req, res) =>{
     }
 };
 
-module.exports = {joinQueue, cancelToken};
+const trackMyToken = async(req, res)=>{
+    try{
+        const myToken = await Token.findOne({
+            user: req.user._id,
+            status: {$in: ['waiting', 'serving']}
+        })
+        if(!myToken){
+            return res.status(404).json({ message: "You do not have an active queue token." });
+        }
+
+        const peopleAhead = await Token.countDocuments({
+            queue: myToken.queue,
+            status: "waiting",
+            token_number: {$lt: myToken.token_number}
+        });
+
+        const newEstimatedTime = peopleAhead*5;
+
+        res.status(200).json({
+            message: "Token status fetched sussessfully.",
+            token: myToken,
+            people_ahead: peopleAhead,
+            real_time_estimated_wait: newEstimatedTime
+        });
+    }catch(error){
+        res.status(500).json({ message: "Server Error", error: error.message });
+    }
+
+}
+
+module.exports = {joinQueue, cancelToken, trackMyToken};

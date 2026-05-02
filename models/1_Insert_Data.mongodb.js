@@ -26,9 +26,12 @@ function getNextSequence(name) {
   return result.seq
 }
 
+
 const user1 = "USER" + String(getNextSequence("userId")).padStart(5, "0")
 const user2 = "USER" + String(getNextSequence("userId")).padStart(5, "0")
 const user3 = "USER" + String(getNextSequence("userId")).padStart(5, "0")
+const user4 = "USER" + String(getNextSequence("userId")).padStart(5, "0")
+const user5 = "USER" + String(getNextSequence("userId")).padStart(5, "0")
 
 db.users.insertMany([
   {
@@ -54,18 +57,30 @@ db.users.insertMany([
     password: "admin123",
     role: "admin",
     created_at: new Date()
+  },
+  {
+    user_id: user4,
+    name: "Antu",
+    email: "antum@gmail.com",
+    password: "1245",
+    role: "customer",
+    created_at: new Date()
+  },
+  {
+    user_id: user5,
+    name: "Marim",
+    email: "marim@gmail.com",
+    password: "123456",
+    role: "customer",
+    created_at: new Date()
   }
 ])
 
 // INSERT SERVICES
 const service1 = "SERVICE" + String(getNextSequence("serviceId")).padStart(5, "0")
-const service2 = "SERVICE" + String(getNextSequence("serviceId")).padStart(5, "0")
-const service3 = "SERVICE" + String(getNextSequence("serviceId")).padStart(5, "0")
 
 db.services.insertMany([
-  { _id: service1, service_name: "Doctor", description: "Doctor Appointment" },
-  { _id: service2, service_name: "Bank", description: "Bank Service" },
-  { _id: service3, service_name: "Admission", description: "University Admission" }
+  { _id: service1, service_name: "University", description: "University Transaction" },
 ])
 
 // INSERT QUEUES
@@ -74,9 +89,9 @@ const queue2 = "QUEUE" + String(getNextSequence("queueId")).padStart(5, "0")
 const queue3 = "QUEUE" + String(getNextSequence("queueId")).padStart(5, "0")
 
 db.queues.insertMany([
-  { _id: queue1, service_id: service1, current_token: 5, created_at: new Date() },
-  { _id: queue2, service_id: service2, current_token: 10, created_at: new Date() },
-  { _id: queue3, service_id: service3, current_token: 2, created_at: new Date() }
+  { _id: queue1, service_id: service1, current_token: 1, created_at: new Date() },
+  { _id: queue2, service_id: service1, current_token: 1, created_at: new Date() },
+  { _id: queue3, service_id: service1, current_token: 1, created_at: new Date() }
 ])
 
 
@@ -90,9 +105,9 @@ db.tokens.insertMany([
     user_id: user1,
     queue_id: queue1,
     service_id: service1,
-    token_number: 6,
-    status: "waiting",
-    estimated_time: 15,
+    token_number: 1,
+    status: "serving",
+    estimated_time: 0,
     created_at: new Date(),
     called_time: null,
     completed_time: null
@@ -101,9 +116,9 @@ db.tokens.insertMany([
     _id: token2,
     user_id: user2,
     queue_id: queue2,
-    service_id: service2,
-    token_number: 11,
-    status: "serving",
+    service_id: service1,
+    token_number: 2,
+    status: "waiting",
     estimated_time: 5,
     created_at: new Date(),
     called_time: new Date(),
@@ -113,13 +128,13 @@ db.tokens.insertMany([
     _id: token3,
     user_id: user3,
     queue_id: queue3,
-    service_id: service3,
+    service_id: service1,
     token_number: 3,
-    status: "done",
-    estimated_time: 0,
+    status: "waiting",
+    estimated_time: 10,
     created_at: new Date(),
     called_time: new Date(),
-    completed_time: new Date()
+    completed_time: null
   }
 ])
 
@@ -156,33 +171,43 @@ db.feedbacks.insertMany([
 ])
 
 // INSERT NOTIFICATIONS
+const n1 = "NOTIFICATION" + String(getNextSequence("notificationId")).padStart(5, "0")
+const n2 = "NOTIFICATION" + String(getNextSequence("notificationId")).padStart(5, "0")
+const n3 = "NOTIFICATION" + String(getNextSequence("notificationId")).padStart(5, "0")
 db.notifications.insertMany([
   {
+    _id:n1,
     user_id: user1,
     token_id: token1,
+    message: "now serving your token",
+    status: "read",
+    created_at: new Date()
+  },
+  {
+    _id:n2,
+    user_id: user2,
+    token_id: token2,
     message: "Your turn is near",
     status: "sent",
     created_at: new Date()
   },
   {
-    user_id: user2,
-    token_id: token2,
-    message: "Now serving your token",
-    status: "sent",
-    created_at: new Date()
-  },
-  {
+    _id:n3,
     user_id: user1,
     token_id: token3,
-    message: "Service completed",
+    message: "Your turn is near",
     status: "read",
     created_at: new Date()
   }
 ])
 
 // INSERT STATISTICS
+const s1 = "STAT" + String(getNextSequence("statId")).padStart(5, "0")
+const s2 = "STAT" + String(getNextSequence("statId")).padStart(5, "0")
+const s3 = "STAT" + String(getNextSequence("statId")).padStart(5, "0")
 db.statistics.insertMany([
   {
+    _id:s1,
     user_id: user1,
     queue_id: queue1,
     feedback_id: fb1,
@@ -191,6 +216,7 @@ db.statistics.insertMany([
     date: new Date()
   },
   {
+    _id:s2,
     user_id: user2,
     queue_id: queue2,
     feedback_id: fb2,
@@ -199,6 +225,7 @@ db.statistics.insertMany([
     date: new Date()
   },
   {
+    _id:s3,
     user_id: user3,
     queue_id: queue3,
     feedback_id: fb3,
