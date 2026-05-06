@@ -1,0 +1,8 @@
+added files
+when Setup.mongodb file is run it will create the smart_queue_system Database 
+
+Collection list
+Token
+Queue
+Service
+User
