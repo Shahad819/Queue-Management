@@ -1,5 +1,25 @@
 const Queue = require('../models/Queue');
 const Token = require('../models/Token');
+const Service = require('../models/Service');
+
+const listQueues = async (req, res) => {
+    try {
+        const queues = await Queue.find().populate('service').lean();
+        
+        const result = await Promise.all(queues.map(async (q) => {
+            const waiting = await Token.countDocuments({ queue: q._id, status: 'waiting' });
+            return {
+                _id: q._id,
+                service: q.service,
+                current_token: q.current_token,
+                waiting_count: waiting
+            };
+        }));
+        res.status(200).json({ queues: result });
+    } catch (error) {
+        res.status(500).json({ message: 'Server Error', error: error.message });
+    }
+};
 
 const joinQueue = async (req, res) => {
     try{
@@ -28,12 +48,16 @@ const joinQueue = async (req, res) => {
         });
         const waitTime = peopleWaiting*5; //wait time 
         
-        const newToken = await Token.create({
+        const created = await Token.create({
             user: req.user._id,
             queue: queueId,
             token_number: nextTokenNumber,
             estimated_time: waitTime
         });
+
+        const newToken = await Token.findById(created._id)
+            .populate('user', 'name email role')
+            .populate({ path: 'queue', populate: { path: 'service' } });
 
         res.status(201).json({message: "Successfully joined the queue", token: newToken});
     } catch(error){
@@ -70,12 +94,16 @@ const trackMyToken = async(req, res)=>{
             user: req.user._id,
             status: {$in: ['waiting', 'serving']}
         })
+            .sort({ createdAt: -1 })
+            .populate('user', 'name email role')
+            .populate({ path: 'queue', populate: { path: 'service' } });
+
         if(!myToken){
             return res.status(404).json({ message: "You do not have an active queue token." });
         }
 
         const peopleAhead = await Token.countDocuments({
-            queue: myToken.queue,
+            queue: myToken.queue._id || myToken.queue,
             status: "waiting",
             token_number: {$lt: myToken.token_number}
         });
@@ -83,7 +111,7 @@ const trackMyToken = async(req, res)=>{
         const newEstimatedTime = peopleAhead*5;
 
         res.status(200).json({
-            message: "Token status fetched sussessfully.",
+            message: "Token status fetched successfully.",
             token: myToken,
             people_ahead: peopleAhead,
             real_time_estimated_wait: newEstimatedTime
@@ -94,4 +122,4 @@ const trackMyToken = async(req, res)=>{
 
 }
 
-module.exports = {joinQueue, cancelToken, trackMyToken};
+module.exports = {listQueues, joinQueue, cancelToken, trackMyToken};

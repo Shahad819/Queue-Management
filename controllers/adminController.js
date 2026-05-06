@@ -1,6 +1,7 @@
-const Queue = require('../models/Queue')
-const Token = require('../models/Token')
-const User = require('../models/User')
+const mongoose = require('mongoose');
+const Queue = require('../models/Queue');
+const Token = require('../models/Token');
+const User = require('../models/User');
 
 const callNextToken = async(req, res)=>{
     try{
@@ -29,14 +30,18 @@ const callNextToken = async(req, res)=>{
 
         await Queue.findByIdAndUpdate(queueId, {current_token: nextToken.token_number})
 
+        // NEW: Fetch the token again to get the user's name for the TV Screen!
+        const populated = await Token.findById(nextToken._id).populate('user', 'name email role');
+
         const io = req.app.get('io');
 
         io.to(queueId).emit('queue_updated', {
             message: "The queue has been updated.",
-            current_token: nextToken.token_number
+            current_token: nextToken.token_number,
+            now_serving_user: populated.user ? { name: populated.user.name, email: populated.user.email } : null
         });
 
-        res.status(200).json({message: `Now serving Token #${nextToken.token_number}`, token: nextToken})
+        res.status(200).json({message: `Now serving Token #${nextToken.token_number}`, token: populated})
     }catch(error){
         res.status(500).json({ message: "Server Error", error: error.message });
     }
@@ -60,14 +65,18 @@ const skipToken = async(req, res)=>{
         await nextToken.save();
         await Queue.findByIdAndUpdate(queueId, { current_token: nextToken.token_number });
 
+        // NEW: Fetch the token again to get the user's name for the TV Screen!
+        const populated = await Token.findById(nextToken._id).populate('user', 'name email role');
+
         const io = req.app.get('io');
 
         io.to(queueId).emit('queue_updated', {
             message: "The queue has been updated.",
-            current_token: nextToken.token_number
+            current_token: nextToken.token_number,
+            now_serving_user: populated.user ? { name: populated.user.name, email: populated.user.email } : null
         });
 
-        res.status(200).json({ message: `Skipped! Now serving Token #${nextToken.token_number}`, token: nextToken });
+        res.status(200).json({ message: `Skipped! Now serving Token #${nextToken.token_number}`, token: populated });
     }catch(error){
          res.status(500).json({ message: "Server Error", error: error.message });
     }
@@ -76,7 +85,9 @@ const skipToken = async(req, res)=>{
 const blacklistUser = async(req, res)=>{
     try{
         const{userId} = req.body;
-        const user = await User.findById(userId);
+        const user = mongoose.Types.ObjectId.isValid(userId)
+            ? await User.findById(userId)
+            : await User.findOne({ email: userId });
 
         if(!user){
             return res.status(404).json({ message: "User not found" })
@@ -132,4 +143,41 @@ const getDailyStats = async(req, res)=>{
 
 };
 
-module.exports = {callNextToken, skipToken, blacklistUser, getDailyStats};
+
+const resetQueue = async (req, res) => {
+    try {
+        const { queueId } = req.params;
+        await Token.updateMany(
+            { queue: queueId, status: { $in: ['waiting', 'serving'] } },
+            { $set: { status: 'cancelled' } }
+        );
+
+        await Queue.findByIdAndUpdate(queueId, { current_token: 0 });
+        
+
+        const io = req.app.get('io');
+        io.to(queueId).emit('queue_updated', { message: 'Queue has been reset', current_token: 0 });
+        
+        res.status(200).json({ message: 'Queue reset' });
+    } catch (error) {
+        res.status(500).json({ message: 'Server Error', error: error.message });
+    }
+};
+
+
+const queueHistory = async (req, res) => {
+    try {
+        const { queueId } = req.params;
+        const tokens = await Token.find({ queue: queueId })
+            .populate('user', 'name email') 
+            .sort({ createdAt: -1 })
+            .limit(100) 
+            .lean();
+        res.status(200).json({ history: tokens });
+    } catch (error) {
+        res.status(500).json({ message: 'Server Error', error: error.message });
+    }
+};
+
+
+module.exports = {callNextToken, skipToken, blacklistUser, getDailyStats, resetQueue, queueHistory};

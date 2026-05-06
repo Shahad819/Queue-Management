@@ -1,0 +1,16 @@
+http://localhost:3001 — The homepage
+http://localhost:3001/login — Login page (use admin@smartqueue.com / admin123)
+http://localhost:3001/services — Browse and join queues
+http://localhost:3001/admin — Admin control panel
+
+admin@smartqueue.com,
+password: admin123
+
+meherab@gmail.com,
+pass123
+
+alice@gmail.com,
+mysecretpassword
+
+tom@gmail.com,
+tom123

@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const connectDB = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
 const queueRoutes = require('./routes/queueRoutes');
@@ -16,6 +17,8 @@ const io = new Server(server, { cors: { origin: "*" } })
 const PORT = process.env.PORT || 3000;
 
 connectDB();
+
+app.use(cors({origin: true, credentials: true}));
 
 app.use(express.json());
 

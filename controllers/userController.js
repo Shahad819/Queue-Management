@@ -51,6 +51,12 @@ const loginUser = async(req, res) => {
             return res.status(400).json({message: "Invalid password"})
         }
 
+        if (user.isBlacklisted) {
+            return res.status(403).json({
+                message: "Your account has been blacklisted. Contact admin."
+            });
+        }
+
         const token = jwt.sign(
             {id: user._id, role: user.role},
             process.env.JWT_SECRET,
