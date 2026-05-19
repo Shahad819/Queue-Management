@@ -1,0 +1,24 @@
+[{
+  "_id": "QUEUE00001",
+  "service_id": "SERVICE00001",
+  "current_token": 1,
+  "created_at": {
+    "$date": "2026-04-20T15:22:15.836Z"
+  }
+},
+{
+  "_id": "QUEUE00002",
+  "service_id": "SERVICE00001",
+  "current_token": 1,
+  "created_at": {
+    "$date": "2026-04-20T15:22:15.836Z"
+  }
+},
+{
+  "_id": "QUEUE00003",
+  "service_id": "SERVICE00001",
+  "current_token": 1,
+  "created_at": {
+    "$date": "2026-04-20T15:22:15.836Z"
+  }
+}]
